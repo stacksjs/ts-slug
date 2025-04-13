@@ -4,10 +4,12 @@ import { afterEach, beforeEach, describe, expect, it } from 'bun:test'
 if (typeof window === 'undefined') {
   describe('browser-like environment', () => {
     beforeEach(() => {
+      // @ts-expect-error - Intentionally mocking window for testing
       globalThis.window = globalThis
     })
 
     afterEach(() => {
+      // @ts-expect-error - Allows deleting non-optional property
       delete globalThis.window
     })
 

@@ -4,9 +4,11 @@ import { afterEach, beforeEach, describe, expect, it } from 'bun:test'
 if (typeof window === 'undefined') {
   describe('react Native-like environment', () => {
     beforeEach(() => {
+      // @ts-expect-error - Intentionally mocking window for testing
       globalThis.window = {}
     })
     afterEach(() => {
+      // @ts-expect-error - Allows deleting non-optional property
       delete globalThis.window
     })
 
