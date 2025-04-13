@@ -43,10 +43,13 @@ German uses special mappings for umlauts that follow German orthographic convent
 
 ```ts
 // German locale mappings
-{
-  'Ä': 'AE', 'ä': 'ae',
-  'Ö': 'OE', 'ö': 'oe',
-  'Ü': 'UE', 'ü': 'ue'
+const germanLocale = {
+  Ä: 'AE',
+  ä: 'ae',
+  Ö: 'OE',
+  ö: 'oe',
+  Ü: 'UE',
+  ü: 'ue'
 }
 ```
 
@@ -62,13 +65,19 @@ Bulgarian uses a specialized Cyrillic-to-Latin transliteration scheme:
 
 ```ts
 // Bulgarian locale mappings
-{
-  'Й': 'Y', 'й': 'y',
-  'X': 'H', 'x': 'h',
-  'Ц': 'Ts', 'ц': 'ts',
-  'Щ': 'Sht', 'щ': 'sht',
-  'Ъ': 'A', 'ъ': 'a',
-  'Ь': 'Y', 'ь': 'y'
+const bulgarianLocale = {
+  Й: 'Y',
+  й: 'y',
+  X: 'H',
+  x: 'h',
+  Ц: 'Ts',
+  ц: 'ts',
+  Щ: 'Sht',
+  щ: 'sht',
+  Ъ: 'A',
+  ъ: 'a',
+  Ь: 'Y',
+  ь: 'y'
 }
 ```
 

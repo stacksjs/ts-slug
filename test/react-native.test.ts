@@ -2,11 +2,6 @@ import { afterEach, beforeEach, describe, expect, it } from 'bun:test'
 
 // Only run in Node.js.
 if (typeof window === 'undefined') {
-  let assert
-  (async function () {
-    assert = (await import('node:assert')).default
-  })()
-
   describe('react Native-like environment', () => {
     beforeEach(() => {
       globalThis.window = {}
