@@ -1,4 +1,3 @@
-import type { SlugOptions } from '../src/types'
 import { beforeEach, describe, expect, it } from 'bun:test'
 import slug from '../src/slug'
 
