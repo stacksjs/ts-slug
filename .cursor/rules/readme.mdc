@@ -1,0 +1,58 @@
+---
+description: General information based on the latest ./README.md content
+globs:
+---
+Update it if APIs change:
+
+# ts-slug
+
+A powerful TypeScript library for converting text strings into URL-friendly slugs. Whether you're building a blog, CMS, or any application that needs clean, normalized URLs, `ts-slug` provides a robust solution with excellent multilingual support.
+
+## Features
+
+`ts-slug` offers a range of powerful features:
+
+- 🌍 **Unicode Support** - Handles special characters from any language
+- 🔤 **Locale-specific Handling** - Special support for German, Bulgarian, Serbian, Ukrainian, and more
+- ⚙️ **Highly Configurable** - Customize replacement characters, case sensitivity, and more
+- 🔄 **Multiple Modes** - Choose between RFC 3986 compliant or pretty URL formats
+- 📝 **TypeScript Native** - Full type definitions included
+- 🪶 **Zero Dependencies** - Lightweight with no external dependencies
+- 🧪 **Thoroughly Tested** - Comprehensive test suite ensures reliability
+
+## Quick Example
+
+```ts
+import slug from 'ts-slug'
+// alternatively
+// import { slug } from 'ts-slug'
+
+// Basic usage
+slug('Hello World') // 'hello-world'
+
+// With options
+slug('Hello World', {
+  replacement: '_',
+  lower: false
+}) // 'Hello_World'
+
+// Multilingual support
+slug('こんにちは世界') // 'konnichihasei-jie'
+slug('Schöne Grüße', { locale: 'de' }) // 'schoene-gruesse'
+```
+
+## Installation
+
+```bash
+# npm
+npm install ts-slug
+
+# yarn
+yarn add ts-slug
+
+# pnpm
+pnpm add ts-slug
+
+# bun
+bun install ts-slug
+```
