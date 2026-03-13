@@ -2,7 +2,7 @@
 
 ## About
 
-Generate slugs from strings. Browser & Bun/Node.js compatible.
+A TypeScript library for converting text strings into URL-friendly slugs with excellent multilingual support. It handles Unicode characters from any language, provides locale-specific transliteration (German, Bulgarian, Serbian, Ukrainian, and more), and offers configurable options for replacement characters, case sensitivity, and RFC 3986 compliant or pretty URL output modes. The library is zero-dependency and works in both browser and server environments.
 
 ## Linting
 
