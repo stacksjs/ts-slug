@@ -1,7 +1,6 @@
 
 ## ...main
 
-
 ### 🏡 Chore
 
 - Initial commit ([7bf9bac](https://github.com/stacksjs/ts-slug/commit/7bf9bac))
@@ -13,4 +12,3 @@
 ### ❤️ Contributors
 
 - Chris ([@chrisbbreuer](https://github.com/chrisbbreuer))
-

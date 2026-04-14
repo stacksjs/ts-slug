@@ -2,7 +2,7 @@
 
 <p align="center"><img src="https://github.com/stacksjs/ts-slug/blob/main/.github/art/cover.jpg?raw=true" alt="Social Card of ts-slug"></p>
 
-## What is ts-slug?
+## What is ts-slug
 
 ts-slug is a powerful, TypeScript-first library for converting text strings into URL-friendly slugs. Whether you're building a blog, CMS, or any application that needs clean, normalized URLs, ts-slug provides a robust solution with excellent multilingual support.
 
@@ -16,7 +16,7 @@ ts-slug is a powerful, TypeScript-first library for converting text strings into
 - **Zero Dependencies**: Lightweight with no external dependencies
 - **Thoroughly Tested**: Comprehensive test suite ensures reliability
 
-## Why Use Slugs?
+## Why Use Slugs
 
 Slugs are URL-friendly versions of text strings, commonly used for:
 

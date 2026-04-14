@@ -29,5 +29,3 @@ features:
     icon: "🚀"
     details: "Tiny footprint with zero dependencies ensures minimal impact on your project."
 ---
-
-<Home />
