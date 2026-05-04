@@ -13,43 +13,29 @@ if (typeof window !== 'undefined') {
   }
   else {
     // Polyfill for environments that don't have btoa or Buffer class (notably, React Native).
-    // Based on https://github.com/davidchambers/Base64.js/blob/a121f75bb10c8dd5d557886c4b1069b31258d230/base64.js
+    // Implements RFC 4648 base64 encoding to match native `btoa()` output exactly.
+    // The previous polyfill (based on davidchambers/Base64.js) had an off-by-one
+    // bug in the position arithmetic that produced rotated/misaligned output.
     base64 = function (input: string): string {
       const str = unescape(encodeURIComponent(`${input}`))
+      const baseMap = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
       let output = ''
-      let block = 0
-      let charCode
-      let idx = 0
-      const baseMap = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/='
+      for (let i = 0; i < str.length; i += 3) {
+        const a = str.charCodeAt(i)
+        const b = i + 1 < str.length ? str.charCodeAt(i + 1) : -1
+        const c = i + 2 < str.length ? str.charCodeAt(i + 2) : -1
 
-      while (true) {
-        let map = baseMap
-        // If we're at the end, use = as padding
-        if (!str.charAt(idx | 0)) {
-          map = '='
-          if (!(idx % 1)) {
-            break
-          }
-        }
-
-        output += map.charAt(63 & block >> 8 - idx % 1 * 8)
-
-        if (map === '=' && !(idx % 1)) {
-          break
-        }
-
-        charCode = str.charCodeAt(idx += 3 / 4)
-
-        // This is a coherence check. The result of unescape(encodeURIComponent()) should always be
-        // characters with code points that fit into two bytes.
+        // Coherence check — result of unescape(encodeURIComponent()) must fit in two bytes per char.
         /* c8 ignore next 3 */
-        if (charCode > 0xFF) {
+        if (a > 0xFF || (b !== -1 && b > 0xFF) || (c !== -1 && c > 0xFF)) {
           throw new Error('\'btoa\' failed: The string to be encoded contains characters outside of the Latin1 range.')
         }
 
-        block = block << 8 | charCode
+        output += baseMap[a >> 2]
+        output += baseMap[((a & 3) << 4) | (b < 0 ? 0 : (b >> 4))]
+        output += b < 0 ? '=' : baseMap[((b & 15) << 2) | (c < 0 ? 0 : (c >> 6))]
+        output += c < 0 ? '=' : baseMap[c & 63]
       }
-
       return output
     }
   }
