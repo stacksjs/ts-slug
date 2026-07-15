@@ -2,7 +2,7 @@
   "name": "ts-slug",
   "type": "module",
   "sideEffects": false,
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Generate slugs from strings. Browser & Bun/Node.js compatible.",
   "author": "Chris Breuer <chris@stacksjs.org>",
   "license": "MIT",
