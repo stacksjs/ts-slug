@@ -1,3 +1,14 @@
+[Compare changes](https://github.com/stacksjs/ts-slug/compare/v0.1.1...v0.1.2)
+
+## 🧹 Chores
+
+- release v0.1.2 ([bbb60e8](https://github.com/stacksjs/ts-slug/commit/bbb60e8)) _(by Chris <chrisbreuer93@gmail.com>)_
+- add release:patch script ([c89620a](https://github.com/stacksjs/ts-slug/commit/c89620a)) _(by Chris <chrisbreuer93@gmail.com>)_
+
+## Contributors
+
+- _Chris <chrisbreuer93@gmail.com>_
+
 [Compare changes](https://github.com/stacksjs/ts-slug/compare/v0.1.0...v0.1.1)
 
 ## 🐛 Bug Fixes
