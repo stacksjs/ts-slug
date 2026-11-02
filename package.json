@@ -51,7 +51,7 @@
     "changelog": "bunx @stacksjs/logsmith --verbose",
     "changelog:generate": "bunx @stacksjs/logsmith --output CHANGELOG.md",
     "release": "bunx --bun @stacksjs/bumpx prompt --recursive",
-    "postinstall": "bunx bun-git-hooks",
+    "prepare": "bunx bun-git-hooks",
     "dev:docs": "bun --bun vitepress dev docs",
     "build:docs": "bun --bun vitepress build docs",
     "preview:docs": "bun --bun vitepress preview docs",
