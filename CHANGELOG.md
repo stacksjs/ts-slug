@@ -1,3 +1,18 @@
+[Compare changes](https://github.com/stacksjs/ts-slug/compare/v0.1.2...v0.2.0)
+
+## 🐛 Bug Fixes
+
+- a script the charmap does not romanize keeps its letters ([e0daded](https://github.com/stacksjs/ts-slug/commit/e0daded)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- an em dash, en dash or any other dash separates words ([92e371d](https://github.com/stacksjs/ts-slug/commit/92e371d)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+
+## 📖 Documentation
+
+- pretty is the default mode, and rfc3986 is the one that keeps dots ([e8368de](https://github.com/stacksjs/ts-slug/commit/e8368de)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+
+## Contributors
+
+- _glennmichael123 <gtorregosa@gmail.com>_
+
 [Compare changes](https://github.com/stacksjs/ts-slug/compare/v0.1.1...v0.1.2)
 
 ## 🧹 Chores
