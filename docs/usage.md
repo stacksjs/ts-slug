@@ -67,11 +67,22 @@ slug('Hello 123 World', {
 ts-slug supports different modes for formatting:
 
 ```ts
-// RFC 3986 mode (default) - only allows characters defined in the URI standard
-slug('Hello.World', { mode: 'rfc3986' }) // Output: 'hello-world'
+// Pretty mode (default) - letters and numbers only
+slug('Hello.World', { mode: 'pretty' }) // Output: 'helloworld'
 
-// Pretty mode - keeps some special characters
-slug('Hello.World', { mode: 'pretty' }) // Output: 'hello.world'
+// RFC 3986 mode - also keeps the URI's unreserved characters
+slug('Hello.World', { mode: 'rfc3986' }) // Output: 'hello.world'
+```
+
+## Scripts and Dashes
+
+A script the charmap does not romanize keeps its letters, and any dash separates words:
+
+```ts
+slug('日本語のタイトル') // Output: '日本語のタイトル'
+slug('한국어 제목') // Output: '한국어-제목'
+slug('Rock—Paper—Scissors') // Output: 'rock-paper-scissors'
+slug('Pages 1–10') // Output: 'pages-1-10'
 ```
 
 ## Locale Support

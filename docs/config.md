@@ -46,7 +46,7 @@ interface SlugOptions {
   trim?: boolean // Default: true
 
   // Slug mode: 'rfc3986' (strict) or 'pretty' (more readable)
-  mode?: 'rfc3986' | 'pretty' // Default: 'rfc3986'
+  mode?: 'rfc3986' | 'pretty' // Default: 'pretty'
 
   // ISO locale code for locale-specific character mappings
   locale?: string
@@ -64,17 +64,20 @@ interface SlugOptions {
 ts-slug supports two different modes:
 
 ```ts
-// RFC 3986 mode (default) - adheres to URI standard
-slug('Hello, World!', { mode: 'rfc3986' }) // 'hello-world'
+// Pretty mode (default) - letters and numbers only
+slug('Hello.World', { mode: 'pretty' }) // 'helloworld'
+slug('日本語のタイトル') // '日本語のタイトル'
 
-// Pretty mode - allows more readable characters
-slug('Hello, World!', { mode: 'pretty' }) // 'hello-world'
+// RFC 3986 mode - also keeps the URI's unreserved `.`, `_` and `~`, and stays ASCII
+slug('Hello.World', { mode: 'rfc3986' }) // 'hello.world'
 ```
 
 The main differences:
 
-- `rfc3986`: Only allows characters defined in [RFC 3986](https://tools.ietf.org/html/rfc3986) URI standard
-- `pretty`: Allows a wider range of characters for more readable slugs
+- `pretty`: Keeps letters and numbers. A script the charmap romanizes (Latin, Greek, Cyrillic, Hebrew, Arabic, Devanagari, Georgian) is romanized; any other script, such as Japanese, Chinese, Korean or Thai, keeps its letters, which are valid in a URL and percent-encoded on the wire.
+- `rfc3986`: Only the unreserved characters of the [RFC 3986](https://tools.ietf.org/html/rfc3986) URI standard, all ASCII, so a script the charmap does not romanize is removed and `slug()` falls back to base64.
+
+In both modes a dash of any kind (hyphen, en dash, em dash) separates words.
 
 ## Locale Support
 
