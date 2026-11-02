@@ -1,3 +1,13 @@
+[Compare changes](https://github.com/stacksjs/ts-slug/compare/v0.2.0...v0.2.1)
+
+## 🐛 Bug Fixes
+
+- install the git hooks in prepare, not in each consumer's install ([33363b7](https://github.com/stacksjs/ts-slug/commit/33363b7)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+
+## Contributors
+
+- _glennmichael123 <gtorregosa@gmail.com>_
+
 [Compare changes](https://github.com/stacksjs/ts-slug/compare/v0.1.2...v0.2.0)
 
 ## 🐛 Bug Fixes
