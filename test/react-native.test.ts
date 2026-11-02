@@ -15,8 +15,9 @@ if (typeof window === 'undefined') {
     it('should work for window object with no btoa function', async () => {
       expect(globalThis.window.btoa).toBeUndefined()
       const slug = (await import('../src/slug')).default
-      expect(slug('鳄梨')).toBe('6boe5qko')
-      expect(slug(String.fromCodePoint(56714, 36991))).toBe('iombvw')
+      // Letters are kept now, so the base64 fallback runs for text with none.
+      expect(slug('🥑')).toBe('8jlkq')
+      expect(slug(String.fromCodePoint(56714) + '🥑')).toBe('ipcfpze')
       expect(slug(String.fromCodePoint(56714))).toBe('ia')
       expect(slug(String.fromCodePoint(55296))).toBe('ia')
     })

@@ -101,6 +101,18 @@ let defaultLocale: Record<string, string> = {}
 /** Dash punctuation: the hyphen, en and em dashes, the figure dash, the minus-like dashes. */
 const DASH = /^\p{Pd}$/u
 
+/**
+ * The scripts the charmap romanizes. Every letter in it belongs to one of
+ * them; `test/scripts.test.ts` fails when that stops being true.
+ */
+export const TRANSLITERATED_SCRIPT: RegExp = /^[\p{Script=Latin}\p{Script=Greek}\p{Script=Cyrillic}\p{Script=Hebrew}\p{Script=Arabic}\p{Script=Devanagari}\p{Script=Georgian}]$/u
+
+/** A combining mark. */
+const MARK = /^\p{M}$/u
+
+/** One letter or mark outside ASCII, kept as it is. */
+const KEPT_LETTER = /^(?![\0-\x7F])[\p{L}\p{M}]$/u
+
 export function slugify(string: string, opts?: SlugOptions | string): string {
   if (typeof string !== 'string') {
     throw new TypeError(`slug() requires a string argument, received ${typeof string}`)
@@ -145,9 +157,20 @@ export function slugify(string: string, opts?: SlugOptions | string): string {
   // sort lengths in descending order.
   lengths = lengths.sort((a, b) => b - a)
 
-  const disallowedChars = options.mode === 'rfc3986' ? /[^\w\s\-.~]/ : /[^A-Z0-9\s]/i
+  // rfc3986 keeps to the URI's unreserved ASCII. Pretty keeps the letters,
+  // marks and numbers of a script the charmap does not transliterate: it
+  // removed them, so a title in Japanese, Chinese or Korean, which the charmap
+  // has no entries for, slugged to "". A Unicode slug is valid in a URL,
+  // percent-encoded on the wire, and is what WordPress gives for the same title.
+  const disallowedChars = options.mode === 'rfc3986' ? /[^\w\s\-.~]/ : /[^\p{L}\p{M}\p{N}\s]/u
 
   let result = ''
+  // Whether the last character went into the slug as it is, a letter or mark
+  // outside ASCII the charmap does not cover. A combining mark is kept only
+  // after one: it belongs to that letter, and is dropped with a letter that was
+  // transliterated or is plain ASCII, so a decomposed "ñ" slugs to "n" as the
+  // composed one does while a Hindi or Thai vowel sign stays on its letter.
+  let afterKeptLetter = false
   for (let char, i = 0, l = string.length; i < l; i++) {
     char = string[i]
     let matchedMultichar = false
@@ -162,10 +185,16 @@ export function slugify(string: string, opts?: SlugOptions | string): string {
       }
     }
     if (!matchedMultichar) {
-      if (localeMap[char]) {
+      // A whole code point, so a letter outside the BMP is kept or removed as
+      // one character rather than as two halves of a surrogate pair.
+      [char, i] = getWholeCharAndI(string, i)
+      // An entry applies when it is there, even mapped to "", as the soft sign
+      // and the Hebrew letters are: with letters now kept, falling through to
+      // the disallowed characters would keep them.
+      if (Object.hasOwn(localeMap, char)) {
         char = localeMap[char]
       }
-      else if (options.charmap && options.charmap[char]) {
+      else if (options.charmap && Object.hasOwn(options.charmap, char)) {
         char = options.charmap[char].replace(options.replacement as string, ' ')
       }
       else if (options.replacement && char.includes(options.replacement)) {
@@ -177,10 +206,20 @@ export function slugify(string: string, opts?: SlugOptions | string): string {
         // does; they were removed, so "Rock—Paper" slugged to "rockpaper".
         char = ' '
       }
+      else if (MARK.test(char) && !afterKeptLetter) {
+        char = ''
+      }
+      else if (TRANSLITERATED_SCRIPT.test(char)) {
+        // A letter of a script the charmap romanizes but has no entry for
+        // (plain ש, ؤ, Ѓ) is removed, as it always was, rather than left raw
+        // inside a romanized word.
+        char = char.replace(/[^A-Za-z0-9]/, '')
+      }
       else {
         char = char.replace(disallowedChars, '')
       }
     }
+    afterKeptLetter = !matchedMultichar && KEPT_LETTER.test(char)
     result += char
   }
 
@@ -814,6 +853,10 @@ const initialCharmap = {
   ჯ: 'j',
   ჰ: 'h',
   // hebrew
+  // Silent letters, romanized as nothing. Removed with every unmapped letter
+  // before letters were kept, so they had no entries.
+  א: '',
+  ע: '',
   ב: 'v',
   גּ: 'g',
   ג: 'g',

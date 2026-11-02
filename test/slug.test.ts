@@ -929,8 +929,10 @@ describe('slug', () => {
     }
   })
 
-  it('should replace zh characters', () => {
-    expect(slug('鳄梨')).toBe('6boe5qko')
+  it('should keep zh characters', () => {
+    // Kept, as WordPress keeps them; they used to be removed, leaving the
+    // base64 fallback `6boe5qko` from `slug()` and "" from `slugify()`.
+    expect(slug('鳄梨')).toBe('鳄梨')
   })
 
   it('should permit replacing custom characters using .extend()', () => {
@@ -955,7 +957,8 @@ describe('slug', () => {
   })
 
   it('should ignore lone surrogates', () => {
-    expect(slug(String.fromCodePoint(56714, 36991))).toBe('iombvw')
+    expect(slug(String.fromCodePoint(56714, 36991))).toBe('避')
+    expect(slug(String.fromCodePoint(56714) + '🥑')).toBe('ipcfpze')
   })
 
   it('should handle a lone low surrogate by itself', () => {
@@ -1206,7 +1209,7 @@ describe('slug', () => {
     expect(slug('hello مرحبا')).toBe('hello-mrhba')
 
     // Latin + CJK
-    expect(slug('hello 你好')).toBe('hello')
+    expect(slug('hello 你好')).toBe('hello-你好')
   })
 
   it('should handle common web patterns', () => {
