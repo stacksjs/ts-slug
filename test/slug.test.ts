@@ -33,7 +33,9 @@ describe('slug', () => {
       expect(slug(`foo ${symbol} bar baz`)).toBe('foo-bar-baz')
     })
     expect(slug('foo_bar. -baz!')).toBe('foobar-baz')
-    expect(slug('foo_bar-baz_bing!', { replacement: '_' })).toBe('foo_barbaz_bing')
+    // A hyphen separates words whatever the replacement; it used to vanish
+    // when the replacement was not itself a hyphen.
+    expect(slug('foo_bar-baz_bing!', { replacement: '_' })).toBe('foo_bar_baz_bing')
   })
 
   it('should consolidate hyphen and space chars', () => {

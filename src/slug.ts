@@ -98,6 +98,9 @@ const locales: Record<string, Record<string, string>> = {
 
 let defaultLocale: Record<string, string> = {}
 
+/** Dash punctuation: the hyphen, en and em dashes, the figure dash, the minus-like dashes. */
+const DASH = /^\p{Pd}$/u
+
 export function slugify(string: string, opts?: SlugOptions | string): string {
   if (typeof string !== 'string') {
     throw new TypeError(`slug() requires a string argument, received ${typeof string}`)
@@ -168,6 +171,11 @@ export function slugify(string: string, opts?: SlugOptions | string): string {
       else if (options.replacement && char.includes(options.replacement)) {
         // preserve the replacement character in case it is excluded by disallowedChars
         char = char.replace(options.replacement, ' ')
+      }
+      else if (DASH.test(char)) {
+        // An em dash, en dash or any other dash separates words, as a hyphen
+        // does; they were removed, so "Rock—Paper" slugged to "rockpaper".
+        char = ' '
       }
       else {
         char = char.replace(disallowedChars, '')
